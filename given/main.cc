@@ -82,7 +82,7 @@ int main (int argc, char **argv){
   if (sem_init(semid,1,0)==-1){
     perror("check empty semaphore init failed\n");
   }
-  if (sem_init(semid,2,queue_size-1)==-1){
+  if (sem_init(semid,2,queue_size)==-1){
     perror("check full semaphore init failed\n");
   }
 
@@ -148,14 +148,19 @@ void *producer (void *P)
   parameter *param = (parameter *) P;
   int counter =0;
   int duration,ret;
+
+
   while (counter < param->num_job){
 
     sleep(param->duration);
     ret = sem_wait(param->semid, 2);
     if (ret!=0){
+      void * result;
+      cerr<<"Full buffer cannot be consumed"<<endl;
       pthread_exit(0);
-      return;
+      return result;
     }
+
 
 
     sem_wait(param->semid, 0);
@@ -182,8 +187,10 @@ void *consumer (void *C)
 
   ret = sem_wait(param->semid, 1);
   if (ret!=0){
+    void * result;
+    cerr<<"Consumer(3): No more jobs left."<<endl;
     pthread_exit(0);
-    return;
+    return result;
   }
   sem_wait(param->semid, 0);
 
