@@ -20,7 +20,6 @@
 # include <ctype.h>
 # include <iostream>
 
-
 using namespace std;
 
 # define SEM_KEY 0x50 // Change this number as needed

@@ -25,19 +25,22 @@ public:
   // Circular Queue 
   int size; 
   int *arr; 
+  int *duration;
   
-  Queue(int size) : front(-1), rear(-1), size(size), arr(new int[size]) {};
+  Queue(int size) : front(-1), rear(-1), size(size), arr(new int[size]) ,duration(new int[size]){};
   ~Queue(){
     delete [] arr;
+    delete [] duration;
   }
-  void enQueue(); 
-  int deQueue(); 
+  void enQueue(int duration); 
+  void deQueue(int& id, int& time); 
   void displayQueue(); 
   bool checkfull();
   bool checkempty();
 };
 
 struct parameter{
+  int id;
   int num_job;
   int duration;
   int semid;
@@ -79,15 +82,16 @@ int main (int argc, char **argv){
   if (sem_init(semid,1,0)==-1){
     perror("check empty semaphore init failed\n");
   }
-  if (sem_init(semid,2,1)==-1){
+  if (sem_init(semid,2,queue_size-1)==-1){
     perror("check full semaphore init failed\n");
   }
 
-  int ret;
+  int ret, duration;
   parameter * P = new parameter[num_producer];
 
   for (int i =0; i < num_producer;i++){
-    P[i] = (parameter) {num_job,i+1,semid,buffer};
+    duration = rand() % 5 +1;
+    P[i] = (parameter) {i,num_job,duration,semid,buffer};
     ret = pthread_create (&producerIds[i], NULL, producer, (void *) &P[i]);
     if (ret!=0){
       perror("Producer pthread_create failed\n");
@@ -98,7 +102,7 @@ int main (int argc, char **argv){
   parameter * C = new parameter[num_consumer];
 
   for (int i =0; i < num_consumer;i++){
-    C[i] = (parameter) {1,i+1,semid,buffer};
+    C[i] = (parameter) {i,1,0,semid,buffer};
     ret = pthread_create (&consumerIds[i], NULL, consumer, (void *) &C[i]);
     if (ret!=0){
       perror("Consumer pthread_create failed\n");
@@ -122,18 +126,6 @@ int main (int argc, char **argv){
     }
   }
 
-  
-  //struct timespec Time[] = { {20,0} };
-  //semtimedop(semid, op, 1, Time);
-  // pthread_join (producerIds[i], NULL);
-  // pthread_join (consumerIds[i], NULL);
-
-  /*pthread_t producerid;
-  int parameter = 5;
-
-  pthread_create (&producerid, NULL, producer, (void *) &parameter);
-
-  pthread_join (producerid, NULL);*/
 
   cout << "Doing some work after the join" << endl;
 
@@ -148,63 +140,60 @@ int main (int argc, char **argv){
   return 0;
 }
 
+
 void *producer (void *P) 
 {
 
   // TODO
   parameter *param = (parameter *) P;
   int counter =0;
+  int duration;
   while (counter < param->num_job){
 
     sleep(param->duration);
+
     sem_wait(param->semid, 2);
 
+
     sem_wait(param->semid, 0);
-    sem_init(param->semid,0,0);
 
-    cout<<"produce for: "<<param->duration<<"s"<<endl;
-    param->buffer->enQueue();
-    sem_init(param->semid,1,1);
+    
+    duration = rand() % 10 +1;
+    param->buffer->enQueue(duration);
+    cout<<"Producer("<<param->id<<"): Job id "<<param->buffer->rear<<" duration "<<param->duration<<endl;
 
-    sem_init(param->semid,0,1);
     sem_signal(param->semid, 0);
 
-    if (param->buffer->checkfull()){
-      sem_init(param->semid,2,0);
-    }
-    sem_signal(param->semid, 2);
-
+    sem_signal(param->semid, 1);
     counter++;
   }
 
-  //cout << "Parameter = " << *param << endl;
-  //sleep (5);
-  //cout << "\nThat was a good sleep - thank you \n" << endl;
-
+  cout<<"Producer("<<param->id<<"): No more jobs to generate."<<endl;
   pthread_exit(0);
 }
 
 void *consumer (void *C)
 {
+  int jobid, duration;
   parameter *param = (parameter *) C;
+
   sem_wait(param->semid, 1);
 
   sem_wait(param->semid, 0);
-  sem_init(param->semid,0,0);
-    // TODO 
-  param->buffer->deQueue();
-  cout<<"consuming for : "<<param->duration<<" s"<<endl;
-  sem_init(param->semid,2,1);
 
-  sem_init(param->semid,0,1);
+    // TODO 
+  param->buffer->deQueue(jobid,duration);
+  cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" executing sleep duration "<<duration<<endl;
+  //cout<<"display :"<<endl;
+  //param->buffer->displayQueue();
+
   sem_signal(param->semid, 0);
 
-  if (param->buffer->checkempty()){
-    sem_init(param->semid,1,0);
-  }
-  sem_signal(param->semid, 1);
-  sleep(param->duration);
-  
+  sem_signal(param->semid, 2);
+
+
+  sleep(duration);
+  cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
 
 
   pthread_exit (0);
@@ -215,46 +204,42 @@ void *consumer (void *C)
 
 
 
-
-
-
-
-  
-  
-
-
 /* Function to create Circular queue */
-void Queue::enQueue() { 
+void Queue::enQueue(int timecost) { 
   if (checkfull()){
-    cout<<"full"<<endl;
     return;
   }
   
   else if (front == -1){ 
     front = rear = 0; 
     arr[rear] = rear;
+    duration[rear] = timecost;
   } 
   
   else if (rear == size-1 && front != 0) { 
     rear = 0; 
     arr[rear] = rear;
+    duration[rear] = timecost;
   } 
   
   else{ 
     rear++; 
     arr[rear] = rear;
+    duration[rear] = timecost;
   } 
 }
 
 // Function to delete element from Circular Queue 
-int Queue::deQueue() { 
+void Queue::deQueue(int& id, int& time) { 
   if (checkempty()){
-    cout<<"Empty"<<endl;
-    return -1;
+    return;
   }
 
-  int data = arr[front]; 
+  id = arr[front]; 
+  time = duration[front];
+
   arr[front] = -1;
+  duration[rear] = -1;
 
   if (front == rear) { 
     front = -1; 
@@ -266,7 +251,6 @@ int Queue::deQueue() {
   else {
     front++; 
   }
-  return data; 
 } 
 
 
@@ -307,3 +291,17 @@ void Queue::displayQueue() {
   }
   cout<<endl;
 } 
+
+
+
+  //struct timespec Time[] = { {20,0} };
+  //semtimedop(semid, op, 1, Time);
+  // pthread_join (producerIds[i], NULL);
+  // pthread_join (consumerIds[i], NULL);
+
+  /*pthread_t producerid;
+  int parameter = 5;
+
+  pthread_create (&producerid, NULL, producer, (void *) &parameter);
+
+  pthread_join (producerid, NULL);*/
