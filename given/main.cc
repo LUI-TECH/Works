@@ -210,10 +210,8 @@ void *consumer (void *C)
 
     sleep(duration);
     cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
-
-
-    pthread_exit (0);
   }
+
 }
 
 
