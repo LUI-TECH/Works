@@ -153,6 +153,7 @@ void *producer (void *P)
   while (counter < param->num_job){
 
     sleep(param->duration);
+
     ret = sem_wait(param->semid, 2);
     if (ret!=0){
       void * result;
@@ -185,32 +186,34 @@ void *consumer (void *C)
   int jobid, duration, ret;
   parameter *param = (parameter *) C;
 
-  ret = sem_wait(param->semid, 1);
-  if (ret!=0){
-    void * result;
-    cerr<<"Consumer(3): No more jobs left."<<endl;
-    pthread_exit(0);
-    return result;
-  }
-  sem_wait(param->semid, 0);
+  while (true){
+
+    ret = sem_wait(param->semid, 1);
+    if (ret!=0){
+      void * result;
+      cerr<<"Consumer(3): No more jobs left."<<endl;
+      pthread_exit(0);
+      return result;
+    }
+
+    sem_wait(param->semid, 0);
 
     // TODO 
-  param->buffer->deQueue(jobid,duration);
-  cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" executing sleep duration "<<duration<<endl;
-  //cout<<"display :"<<endl;
-  //param->buffer->displayQueue();
-
-  sem_signal(param->semid, 0);
-
-  sem_signal(param->semid, 2);
+    param->buffer->deQueue(jobid,duration);
+    cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" executing sleep duration "<<duration<<endl;
 
 
-  sleep(duration);
-  cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
+    sem_signal(param->semid, 0);
+
+    sem_signal(param->semid, 2);
 
 
-  pthread_exit (0);
+    sleep(duration);
+    cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
 
+
+    pthread_exit (0);
+  }
 }
 
 
