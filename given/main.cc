@@ -147,12 +147,15 @@ void *producer (void *P)
   // TODO
   parameter *param = (parameter *) P;
   int counter =0;
-  int duration;
+  int duration,ret;
   while (counter < param->num_job){
 
     sleep(param->duration);
-
-    sem_wait(param->semid, 2);
+    ret = sem_wait(param->semid, 2);
+    if (ret!=0){
+      pthread_exit(0);
+      return;
+    }
 
 
     sem_wait(param->semid, 0);
@@ -174,11 +177,14 @@ void *producer (void *P)
 
 void *consumer (void *C)
 {
-  int jobid, duration;
+  int jobid, duration, ret;
   parameter *param = (parameter *) C;
 
-  sem_wait(param->semid, 1);
-
+  ret = sem_wait(param->semid, 1);
+  if (ret!=0){
+    pthread_exit(0);
+    return;
+  }
   sem_wait(param->semid, 0);
 
     // TODO 
