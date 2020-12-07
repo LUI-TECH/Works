@@ -255,7 +255,7 @@ void Queue::deQueue(int& id, int& time) {
   time = duration[front];
 
   arr[front] = -1;
-  duration[rear] = -1;
+  duration[front] = -1;
 
   if (front == rear) { 
     front = -1; 
