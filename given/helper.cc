@@ -49,7 +49,7 @@ void sem_wait (int id, short unsigned int num)
   };
   //semop (id, op, 1);
   struct timespec Time[] = { {20,0} };
-  semtimedop(semid, op, 1, Time);
+  semtimedop(id, op, 1, Time);
 }
 
 void sem_signal (int id, short unsigned int num)

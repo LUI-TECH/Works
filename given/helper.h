@@ -19,7 +19,7 @@
 # include <pthread.h>
 # include <ctype.h>
 # include <iostream>
-#include&lt;iostream&gt;
+
 
 using namespace std;
 
