@@ -216,8 +216,8 @@ void Queue::enQueue(int timecost) {
     return;
   }
   
-  else if (front == -1){ 
-    front = rear = 0; 
+  else if (front == rear){ //-1
+    //front = rear = 0; 
     arr[rear] = rear;
     duration[rear] = timecost;
   } 
@@ -248,9 +248,9 @@ void Queue::deQueue(int& id, int& time) {
   duration[front] = -1;
 
   if (front == rear) { 
-    front = -1; 
-    rear = -1; 
-  } 
+    front = (front+1)%size;//-1; 
+    rear = (rear+1)%size;//-1; 
+  }
   else if (front == size-1) {
     front = 0; 
   }
