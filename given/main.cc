@@ -217,7 +217,12 @@ void Queue::enQueue(int timecost) {
   }
   
   else if (front == -1){ 
-    front = rear ;//= 0; 
+    if (rear == -1){
+      front = rear =0;
+    }
+    else{
+      front = rear ;//= 0; 
+    }
     arr[rear] = rear;
     duration[rear] = timecost;
   } 
