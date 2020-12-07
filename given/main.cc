@@ -205,11 +205,13 @@ void *consumer (void *C)
 
     sem_signal(param->semid, 0);
 
+    sleep(duration);
+    cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
+    
     sem_signal(param->semid, 2);
 
 
-    sleep(duration);
-    cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
+
   }
 
 }
