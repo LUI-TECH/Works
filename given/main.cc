@@ -9,12 +9,6 @@ void *producer (void *id);
 void *consumer (void *id);
 void arg_check(int arg);
 
-
-
-
-
-
-
 class Queue 
 {
 public:
@@ -127,16 +121,15 @@ int main (int argc, char **argv){
   }
 
 
-  cout << "Doing some work after the join" << endl;
-
   sem_close(semid);
-  pthread_exit(NULL);
+  
 
   delete buffer;
   delete [] producerIds;
   delete [] consumerIds;
   delete [] P;
   delete [] C;
+  pthread_exit(NULL);
   return 0;
 }
 
@@ -209,9 +202,6 @@ void *consumer (void *C)
     cout<<"Consumer("<<param->id<<"): Job id "<<jobid<<" completed"<<endl;
     
     sem_signal(param->semid, 2);
-
-
-
   }
 
 }
@@ -308,16 +298,3 @@ void Queue::displayQueue() {
   cout<<endl;
 } 
 
-
-
-  //struct timespec Time[] = { {20,0} };
-  //semtimedop(semid, op, 1, Time);
-  // pthread_join (producerIds[i], NULL);
-  // pthread_join (consumerIds[i], NULL);
-
-  /*pthread_t producerid;
-  int parameter = 5;
-
-  pthread_create (&producerid, NULL, producer, (void *) &parameter);
-
-  pthread_join (producerid, NULL);*/
