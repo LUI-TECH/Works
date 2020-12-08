@@ -238,7 +238,7 @@ void *producer (void *P)
     param->buffer->enQueue(duration);
 
     // Print info
-    cout<<"Producer("<<param->id<<"): Job id "<<param->buffer->rear<<" duration "<<param->duration<<endl;
+    cout<<"Producer("<<param->id<<"): Job id "<<param->buffer->rear<<" duration "<<duration<<endl;
 
     // MUTEX Sem value +1 (up) update mutex semaphore to release lock
     sem_signal(param->semid, 0);
