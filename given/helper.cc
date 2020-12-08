@@ -9,7 +9,6 @@
  ******************************************************************/
 
 # include "helper.h"
-//int semtimedop(int semid, struct sembuf *sops, size_t nsops, const struct timespec *timeout);
 int check_arg (char *buffer)
 {
   int i, num = 0, temp = 0;
@@ -42,12 +41,13 @@ int sem_init (int id, int num, int value)
   return 0;
 }
 
+// use int function to output error info
 int sem_wait (int id, short unsigned int num)
 {
   struct sembuf op[] = {
     {num, -1, SEM_UNDO}
   };
-  //semop (id, op, 1);
+  // use semtimedop to wait for 20s
   struct timespec Time[] = { {20,0} };
   return semtimedop(id, op, 1, Time);
 }
