@@ -311,9 +311,6 @@ void *consumer (void *C)
 }
 
 
-
-
-
 /* Function to append Circular queue */
 void Queue::enQueue(int timecost) { 
   // if queue is full stop adding elements
