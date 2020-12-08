@@ -22,7 +22,7 @@
 
 using namespace std;
 
-# define SEM_KEY 0x50 // Change this number as needed
+# define SEM_KEY 0x99 // Change this number as needed
 
 
 union semun {

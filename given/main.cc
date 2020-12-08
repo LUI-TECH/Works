@@ -46,7 +46,7 @@ int main (int argc, char **argv){
   
   // Initialize adn assign the key to the current execution file
   key_t key;
-  key = ftok("./main", 'A');
+  key = ftok("./main", 'M');
 
   // Initiliza and assign the id for semaphore set 
   int semid = sem_create(key, 3);
@@ -181,7 +181,7 @@ void *producer (void *P)
       return result;
     }
 
-    // Assign the random duration for each jobs
+    // Assign the random duration (1-10) for each jobs
     duration = rand() % 10 +1;
 
     // Append the job into the Circular Queue
