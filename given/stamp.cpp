@@ -79,7 +79,7 @@ void error(char * digest){
     digest[i] = errors[i]
   }
   while(digest[count] != NULL){
-    digest[count] = "";
+    digest[count] = '';
     count ++;
   }
 }
