@@ -94,6 +94,7 @@ bool make_header(const string recipient, const string filename, char * header){
   char hashcode[41];
   string temp;
   int count =0;
+  char hashtemp;
   
 
   for (i = 0; i< recipient.length(); i++){
@@ -101,10 +102,13 @@ bool make_header(const string recipient, const string filename, char * header){
   }
   header[i] = ':';
   i++;
-
+  if (!file_to_SHA1_digest(filename, hashcode)){
+    return false;
+  }
   while (count < 10000000){
-    if (!file_to_SHA1_digest(filename, hashcode)){
-      return false;
+    if (count != 0){
+      hushtemp = hushcode;
+      text_to_SHA1_digest(hushtemp, hushcode);
     }
     temp.assign(hashcode, 40);
     if (leading_zeros(temp) == 5){
