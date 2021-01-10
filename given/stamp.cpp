@@ -52,7 +52,7 @@ int leading_zeros(string digest){
 }
 
 
-bool file_to_SHA1_digest(string filename, char * digest){
+bool file_to_SHA1_digest(const string filename, char * digest){
   ifstream file(filename);
   if (!file.is_open()){
     error(digest);
@@ -100,7 +100,7 @@ bool make_header(const string recipient, const string filename, char * header){
   i++;
 
   while (count < 10000000){
-    if (!file_to_SHA1_digest(string filename, char * hashcode)){
+    if (!file_to_SHA1_digest(filename, hashcode)){
       return false;
     }
     temp.assign(hashcode, 40);
@@ -111,8 +111,8 @@ bool make_header(const string recipient, const string filename, char * header){
       char intChar[9];
       itoa(count,intChar,10);
       int c = 0;
-      i = i+temp.length()
-      header[i] = ':'
+      i = i+temp.length();
+      header[i] = ':';
       i++;
       while (intChar[c]!= NULL){
         header[i+c] = intChar[c];
