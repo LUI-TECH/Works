@@ -94,7 +94,7 @@ bool make_header(const string recipient, const string filename, char * header){
   char hashcode[41];
   string temp;
   int count =0;
-  char hashtemp;
+  char hashtemp[41];
   
 
   for (i = 0; i< recipient.length(); i++){
