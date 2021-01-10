@@ -71,6 +71,6 @@ bool file_to_SHA1_digest(string filename, char * digest){
   }
   cout<<text<<endl;
   
-  text_to_SHA1_digest(text,digest);
+  //text_to_SHA1_digest(text,digest);
   return true;
 }
