@@ -111,16 +111,16 @@ bool make_header(const string recipient, const string filename, char * header){
       for (int j = 0; j< temp.length(); j++){
         header[i+j] = temp[j];
       }
-      char intChar[9];
-      itoa(count,intChar,10);
-      int c = 0;
+      //char intChar[9];
+      //itoa(count,intChar,10);
+      string countnum = to_string(count);
       i = i+temp.length();
       header[i] = ':';
-      i++;
-      while (intChar[c]!= NULL){
-        header[i+c] = intChar[c];
-        c++;
+
+      for ( int j =0; j< countnum.length();j ++){
+        header[i+j+1] = countnum[j];
       }
+      
       return true;
       
     }
