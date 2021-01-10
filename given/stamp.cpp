@@ -116,15 +116,13 @@ bool make_header(const string recipient, const string filename, char * header){
       string countnum = to_string(count);
       i = i+temp.length();
       header[i] = ':';
-
       for ( int j =0; j< countnum.length();j ++){
         header[i+j+1] = countnum[j];
       }
-      
       return true;
-      
     }
     count++;
+    cout<<count<<endl;
   }
   return false;
 
