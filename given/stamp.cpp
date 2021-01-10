@@ -4,6 +4,8 @@
 #include <cstring>
 #include <cassert>
 #include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 #include "stamp.h"
 
 using namespace std;
