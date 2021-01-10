@@ -43,7 +43,7 @@ int leading_zeros(string digest){
     if ((digest[i] < '0' || digest[i] > '9') && (digest[i] < 'a' || digest[i] > 'f')){
       return -1 ;
     }
-    if (digest[i]==0){
+    if (digest[i] == '0'){
       count++;
     }
   }
