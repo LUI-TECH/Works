@@ -108,7 +108,7 @@ bool make_header(const string recipient, const string filename, char * header){
   while (count < 10000000){
     if (count != 0){
       hashtemp = hqshcode;
-      text_to_SHA1_digest(hashtemp, hqshcode);
+      text_to_SHA1_digest(hashtemp, hashcode);
     }
     temp.assign(hashcode, 40);
     if (leading_zeros(temp) == 5){
