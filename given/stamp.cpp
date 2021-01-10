@@ -55,11 +55,7 @@ int leading_zeros(string digest){
 bool file_to_SHA1_digest(string filename, char * digest){
   ifstream file(filename);
   if (!file.is_open()){
-    digest[0] = 'e';
-    digest[1] = 'r';
-    digest[2] = 'r';
-    digest[3] = 'o';
-    digest[4] = 'r';
+    digest = "error";
     return false;
   }
   string text;
@@ -72,7 +68,7 @@ bool file_to_SHA1_digest(string filename, char * digest){
   }
 
   const char *chartext = text.c_str();
-  
+  cout<<chartext<<endl;
   text_to_SHA1_digest(chartext,digest);
   return true;
 }
