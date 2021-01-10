@@ -1,3 +1,6 @@
+
+#include <stdio.h>
+#include <stdlib.h>
 enum MessageStatus {
   INVALID_HEADER=-1,
   WRONG_RECIPIENT=-2,

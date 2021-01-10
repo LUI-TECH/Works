@@ -83,3 +83,47 @@ void error(char * digest){
     i++;
   }
 }
+
+
+bool make_header(const string recipient, const string filename, char * header){
+
+  int i;
+  char hashcode[41];
+  string temp;
+  int count =0;
+  
+
+  for (i = 0; i< recipient.length(); i++){
+    header[i] = recipient[i];
+  }
+  header[i] = ':';
+  i++;
+
+  while (count < 10000000){
+    if (!file_to_SHA1_digest(string filename, char * hashcode)){
+      return false;
+    }
+    temp.assign(hashcode, 40);
+    if (leading_zeros(temp) == 5){
+      for (int j = 0; j< temp.length(); j++){
+        header[i+j] = temp[j];
+      }
+      char intChar[9];
+      itoa(count,intChar,10);
+      int c = 0;
+      i = i+temp.length()
+      header[i] = ':'
+      i++;
+      while (intChar[c]!= NULL){
+        header[i+c] = intChar[c];
+        c++;
+      }
+      return true;
+      
+    }
+    count++;
+  }
+  return false;
+
+
+}
