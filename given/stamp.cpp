@@ -78,6 +78,6 @@ void error(char * digest){
     digest[i] = errors[i];
   }
   while(digest[5] != NULL){
-    std::remove(digest[5],digest[40],digest[5]);
+    std::remove(digest+5,digest+40,digest[5]);
   }
 }
