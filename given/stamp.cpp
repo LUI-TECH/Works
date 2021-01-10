@@ -6,6 +6,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include "stamp.h"
 
 using namespace std;
