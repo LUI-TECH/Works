@@ -15,5 +15,5 @@ void text_to_SHA1_digest(const char *text, char *digest);
 int leading_zeros(std::string digest);
 bool file_to_SHA1_digest(std::string filename, char * digest);
 void error(char * digest);
-bool make_header(const std::tring recipient, const std::string filename, char * header);
+bool make_header(const std::string recipient, const std::string filename, char * header);
 
