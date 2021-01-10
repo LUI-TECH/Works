@@ -60,7 +60,7 @@ bool file_to_SHA1_digest(string filename, char * digest){
   }
   string text;
   string temp;
-  file>>temp;
+  file>>text;
   while (!file.eof()){
     file>>temp;
     text += ' ';
