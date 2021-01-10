@@ -122,7 +122,7 @@ bool make_header(const string recipient, const string filename, char * header){
       return true;
     }
     count++;
-    cout<<count<<endl;
+    cout<<temp<<endl;
   }
   return false;
 
