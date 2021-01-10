@@ -74,7 +74,7 @@ bool file_to_SHA1_digest(string filename, char * digest){
 
 void error(char * digest){
   int count = 5;
-  string errors = "error"
+  string errors = "error";
   for (int i= 0; i < errors.length(); i++){
     digest[i] = errors[i]
   }
