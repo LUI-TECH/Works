@@ -1,15 +1,12 @@
-CC=g++ -Wall
-
-all: main
-
-main: helper.o main.o
-	$(CC) -pthread -o main helper.o main.o
-
-main.o: helper.cc main.cc
-	$(CC) -c helper.cc main.cc
-
-tidy:
-	rm -f *.o core
-
+cc=g++
+exe=main
+obj=main.o stamp.o
+$(exe):$(obj)
+	$(cc) $(obj) -lcrypto -o $(exe)
+main.o:main.cpp stamp.cpp stamp.h
+	$(cc) -g -Wall -c main.cpp
+stamp.o:stamp.cpp stamp.h
+	$(cc) -g -Wall -c stamp.cpp
 clean:
-	rm -f main producer consumer *.o core
+	rm -rf *.o main
+
