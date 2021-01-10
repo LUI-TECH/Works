@@ -73,13 +73,11 @@ bool file_to_SHA1_digest(string filename, char * digest){
 }
 
 void error(char * digest){
-  int count = 5;
   string errors = "error";
   for (int i= 0; i < errors.length(); i++){
     digest[i] = errors[i];
   }
-  while(digest[count] != NULL){
-    digest[count] = '';
-    count ++;
+  while(digest[5] != NULL){
+    std::remove(digest[5],digest[40],digest[5]);
   }
 }
