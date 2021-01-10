@@ -39,13 +39,14 @@ void text_to_SHA1_digest(const char *text, char *digest) {
 
 int leading_zeros(string digest){
   int count =0;
-  for (int i = 0; i < 5; i++ ){
+  for (int i = 0; i < digest.length(); i++ ){
     if ((digest[i] < '0' || digest[i] > '9') && (digest[i] < 'a' || digest[i] > 'f')){
       return -1 ;
     }
-    if (digest[i] == '0'){
-      count++;
+    else if (digest[i] != '0'){
+      break;
     }
+    count++;
   }
   return count;
 }
@@ -63,6 +64,7 @@ bool file_to_SHA1_digest(string filename, char * digest){
   }
   char text[100];
   file>>text;
+  cout<<text<<endl;
   text_to_SHA1_digest(text,digest);
   return true;
 }
