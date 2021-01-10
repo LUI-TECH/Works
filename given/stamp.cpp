@@ -64,13 +64,15 @@ bool file_to_SHA1_digest(string filename, char * digest){
   }
   string text;
   string temp;
+  file>>temp;
   while (!file.eof()){
     file>>temp;
     text += ' ';
     text += temp;
   }
-  cout<<text<<endl;
+
+  const char *chartext = text.c_str();
   
-  //text_to_SHA1_digest(text,digest);
+  text_to_SHA1_digest(chartext,digest);
   return true;
 }
