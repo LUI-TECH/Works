@@ -179,8 +179,8 @@ MessageStatus check_header(const string email_address, char * header, string fil
     count ++;
   }
 
-  text_to_SHA1_digest(header, tempcode);
-  temp.assign(tempcode,40);
+  text_to_SHA1_digest(header, hashcode);
+  temp.assign(hashcode,40);
   if (leading_zeros(temp) != 5){
     return INVALID_HEADER;
   }
