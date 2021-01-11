@@ -107,19 +107,14 @@ bool make_header(const string recipient, const string filename, char * header){
   if (!file_to_SHA1_digest(filename, hashcode)){
     return false;
   }
-  
+  temp.assign(hashcode, 40);
   for (int j = 0; j< 40; j++){
     header[i+j] = hashcode[j];
   }
   header[i+temp.length()] = ':';
 
-  string countnum = to_string(count);
-  for ( int j =0; j< countnum.length();j ++){
-    header[i+j+1+40] = countnum[j];
-  }
-
   while (count < 10000000){
-    countnum = to_string(count);
+    string countnum = to_string(count);
     for ( int j =0; j< countnum.length();j ++){
       header[i+j+1+40] = countnum[j];
     }   
