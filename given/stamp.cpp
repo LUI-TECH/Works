@@ -133,3 +133,58 @@ bool make_header(const string recipient, const string filename, char * header){
 
 
 }
+
+  case INVALID_HEADER:
+    return "Invalid header.";
+  case WRONG_RECIPIENT:
+    return "Wrong recipient.";
+  case INVALID_MESSAGE_DIGEST:
+    return "Invalid message digest.";
+  case INVALID_HEADER_DIGEST:
+    return "Invalid header digest.";
+  case VALID_EMAIL:
+    return "Valid email.";
+
+
+MessageStatus check_header(const string email_address, char * header, string filename){
+  char hashcode[41];
+  char h[512];
+  int i =0;
+  
+  string temp;
+  for (i = 0; i< email_address.length(); i++){
+    if (header[i] != email_address[i]){
+      return WRONG_RECIPIENT;
+    }
+  }
+  if (header[i] != ':'){
+    return INVALID_HEADER;
+  }
+  file_to_SHA1_digest(filename, hashcode);
+  for (int j=0; j< 40; j++){
+    if (header[i+j] != hashcode[i]){
+      return INVALID_MESSAGE_DIGEST;
+    }
+  }
+
+  if (header[i+40] != ':'){
+    return INVALID_HEADER;
+  }
+  int count = i+40+1;
+  make_header(email_address, filename, h);
+  while (h[count] != NULL){
+    if (h[count] != header[count]){
+      return INVALID_HEADER_DIGEST;
+    }
+    count ++;
+  }
+
+  text_to_SHA1_digest(header, tempcode);
+  temp.assign(tempcode,40);
+  if (leading_zeros(temp) != 5){
+    return INVALID_HEADER;
+  }
+
+  return VALID_EMAIL;
+
+}

@@ -99,5 +99,42 @@ int main()
   else
     cout << "There was an error generating the header." << endl;
   cout << endl;
+  cout << "====================== Question 4 ======================" << endl << endl;
+
+  // valid email
+  cout << "Checking email with header " << endl
+       << "'wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:313889'" 
+       << endl << "sent to 'wjk@imperial.ac.uk' with body 'message1.txt':" << endl;
+  MessageStatus result = check_header("wjk@imperial.ac.uk",
+    "wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:313889",
+    "message1.txt");
+  cout << message_status(result) << endl << endl;
+
+  // wrong recipient
+  cout << "Checking email with header " << endl
+       << "'wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:313889'"
+       << endl << "sent to 'fs@imperial.ac.uk' with body 'message1.txt':" << endl;
+  result = check_header("fs@imperial.ac.uk",
+    "wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:313889",
+    "message1.txt");
+  cout << message_status(result) << endl << endl;
+
+  // invalid message digest
+  cout << "Checking email with header " << endl
+       << "'wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:313889'"
+       << endl << "sent to 'wjk@imperial.ac.uk' with body 'message2.txt':" << endl;
+  result = check_header("wjk@imperial.ac.uk",
+    "wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:313889",
+    "message2.txt");
+  cout << message_status(result) << endl << endl;
+
+  // wrong counter leading to invalid header digest
+  cout << "Checking email with header " << endl
+       << "'wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:875231'"
+       << endl << "sent to 'wjk@imperial.ac.uk' with body 'message1.txt':" << endl;
+  result = check_header("wjk@imperial.ac.uk",
+    "wjk@imperial.ac.uk:60eb8db1a3c0ea1ad3d5548f248b4a3e73711ee5:875231",
+    "message1.txt");
+  cout << message_status(result) << endl << endl;
   return 0;
 }
