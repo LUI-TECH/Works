@@ -101,6 +101,8 @@ bool make_header(const string recipient, const string filename, char * header){
   }
   header[i] = ':';
   i++;
+
+
   if (!file_to_SHA1_digest(filename, hashcode)){
     return false;
   }
@@ -114,13 +116,11 @@ bool make_header(const string recipient, const string filename, char * header){
     for (int j = 0; j< temp.length(); j++){
       header[i+j] = temp[j];
     }
-      //char intChar[9];
-      //itoa(count,intChar,10);
+
     string countnum = to_string(count);
-    i = i+temp.length();
-    header[i] = ':';
+    header[i+i+temp.length()] = ':';
     for ( int j =0; j< countnum.length();j ++){
-      header[i+j+1] = countnum[j];
+      header[i+j+1+temp.length()] = countnum[j];
     }
 
     if (leading_zeros(temp) == 5){
@@ -128,7 +128,7 @@ bool make_header(const string recipient, const string filename, char * header){
     } 
   
     count++;
-    cout<<temp<<endl;
+    //cout<<temp<<endl;
   }
   return false;
 
