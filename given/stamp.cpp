@@ -94,7 +94,6 @@ bool make_header(const string recipient, const string filename, char * header){
   char hashcode[41];
   string temp;
   int count =0;
-  char hashtemp[41];
   
 
   for (i = 0; i< recipient.length(); i++){
@@ -107,24 +106,27 @@ bool make_header(const string recipient, const string filename, char * header){
   }
   while (count < 10000000){
     if (count != 0){
-      hashtemp = hashcode;
-      text_to_SHA1_digest(hashtemp, hashcode);
+      text_to_SHA1_digest(header, hashcode);
     }
+
     temp.assign(hashcode, 40);
-    if (leading_zeros(temp) == 5){
-      for (int j = 0; j< temp.length(); j++){
-        header[i+j] = temp[j];
-      }
+
+    for (int j = 0; j< temp.length(); j++){
+      header[i+j] = temp[j];
+    }
       //char intChar[9];
       //itoa(count,intChar,10);
-      string countnum = to_string(count);
-      i = i+temp.length();
-      header[i] = ':';
-      for ( int j =0; j< countnum.length();j ++){
-        header[i+j+1] = countnum[j];
-      }
-      return true;
+    string countnum = to_string(count);
+    i = i+temp.length();
+    header[i] = ':';
+    for ( int j =0; j< countnum.length();j ++){
+      header[i+j+1] = countnum[j];
     }
+
+    if (leading_zeros(temp) == 5){
+      return true;
+    } 
+  
     count++;
     cout<<temp<<endl;
   }
