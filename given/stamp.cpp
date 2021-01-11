@@ -124,6 +124,11 @@ bool make_header(const string recipient, const string filename, char * header){
     }
 
     if (leading_zeros(temp) == 5){
+      cout<<temp<<endl;
+      string countnum = to_string(count);
+      for ( int j =0; j< countnum.length();j ++){
+        header[i+j+1+40] = countnum[j];
+      }
       return true;
     } 
   
