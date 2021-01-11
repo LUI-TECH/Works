@@ -92,6 +92,7 @@ bool make_header(const string recipient, const string filename, char * header){
 
   int i;
   char hashcode[41];
+  char tempcode[41];
   string temp;
   int count =0;
   
@@ -106,21 +107,20 @@ bool make_header(const string recipient, const string filename, char * header){
   if (!file_to_SHA1_digest(filename, hashcode)){
     return false;
   }
+  temp.assign(hashcode, 40);
+  for (int j = 0; j< temp.length(); j++){
+    header[i+j] = temp[j];
+  }
+  header[i+temp.length()] = ':';
+
   while (count < 10000000){
     if (count != 0){
-      text_to_SHA1_digest(header, hashcode);
+      text_to_SHA1_digest(header, tempcode);
     }
-
-    temp.assign(hashcode, 40);
-
-    for (int j = 0; j< temp.length(); j++){
-      header[i+j] = temp[j];
-    }
-
+    temp.assign(tempcode,40);
     string countnum = to_string(count);
-    header[i+temp.length()] = ':';
     for ( int j =0; j< countnum.length();j ++){
-      header[i+j+1+temp.length()] = countnum[j];
+      header[i+j+1+40] = countnum[j];
     }
 
     if (leading_zeros(temp) == 5){
