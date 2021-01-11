@@ -118,7 +118,7 @@ bool make_header(const string recipient, const string filename, char * header){
     }
 
     string countnum = to_string(count);
-    header[i+i+temp.length()] = ':';
+    header[i+temp.length()] = ':';
     for ( int j =0; j< countnum.length();j ++){
       header[i+j+1+temp.length()] = countnum[j];
     }
