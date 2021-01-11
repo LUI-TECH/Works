@@ -15,4 +15,4 @@ int leading_zeros(std::string digest);
 bool file_to_SHA1_digest(std::string filename, char * digest);
 void error(char * digest);
 bool make_header(const std::string recipient, const std::string filename, char * header);
-MessageStatus check_header(const string email_address, char * header, string filename);
+MessageStatus check_header(const std::string email_address, char * header, std::string filename);
