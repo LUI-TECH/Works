@@ -134,16 +134,7 @@ bool make_header(const string recipient, const string filename, char * header){
 
 }
 
-  case INVALID_HEADER:
-    return "Invalid header.";
-  case WRONG_RECIPIENT:
-    return "Wrong recipient.";
-  case INVALID_MESSAGE_DIGEST:
-    return "Invalid message digest.";
-  case INVALID_HEADER_DIGEST:
-    return "Invalid header digest.";
-  case VALID_EMAIL:
-    return "Valid email.";
+
 
 
 MessageStatus check_header(const string email_address, char * header, string filename){
