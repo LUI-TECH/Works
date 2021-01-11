@@ -112,7 +112,7 @@ bool make_header(const string recipient, const string filename, char * header){
     header[i+j] = temp[j];
   }
   header[i+temp.length()] = ':';
-  
+
   while (count < 10000000){
     if (count != 0){
       text_to_SHA1_digest(header, tempcode);
@@ -120,16 +120,12 @@ bool make_header(const string recipient, const string filename, char * header){
     }
     
 
-    string countnum = to_string(count);
+    string countnum = to_string(count-1);
     for ( int j =0; j< countnum.length();j ++){
       header[i+j+1+40] = countnum[j];
     }
 
     if (leading_zeros(temp) == 5){
-      string countnum = to_string(count-1);
-      for ( int j =0; j< countnum.length();j ++){
-        header[i+j+1+40] = countnum[j];
-      }
       return true;
     } 
   
