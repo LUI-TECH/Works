@@ -158,7 +158,7 @@ MessageStatus check_header(const string email_address, char * header, string fil
     }
   }
 
-  if (header[i+40] != ':'){
+  if (header[i+40+1] != ':'){
     return INVALID_HEADER;
   }
   int count = i+40+1;
