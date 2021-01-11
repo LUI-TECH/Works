@@ -153,7 +153,7 @@ MessageStatus check_header(const string email_address, char * header, string fil
   }
   file_to_SHA1_digest(filename, hashcode);
   for (int j=0; j< 40; j++){
-    if (header[i+j] != hashcode[i]){
+    if (header[i+j+1] != hashcode[j]){
       return INVALID_MESSAGE_DIGEST;
     }
   }
