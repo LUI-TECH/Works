@@ -94,7 +94,7 @@ bool make_header(const string recipient, const string filename, char * header){
   char hashcode[41];
   char tempcode[41];
   string temp;
-  int count = -1;
+  int count = 0;
   
 
   for (i = 0; i< recipient.length(); i++){
@@ -112,24 +112,28 @@ bool make_header(const string recipient, const string filename, char * header){
     header[i+j] = temp[j];
   }
   header[i+temp.length()] = ':';
-
+  
   while (count < 10000000){
-    if (count != -1){
+    if (count != 0){
       text_to_SHA1_digest(header, tempcode);
+      temp.assign(tempcode,40);
     }
-    temp.assign(tempcode,40);
+    
+
     string countnum = to_string(count);
     for ( int j =0; j< countnum.length();j ++){
       header[i+j+1+40] = countnum[j];
     }
 
     if (leading_zeros(temp) == 5){
-      cout<<temp<<endl;
+      string countnum = to_string(count-1);
+      for ( int j =0; j< countnum.length();j ++){
+        header[i+j+1+40] = countnum[j];
+      }
       return true;
     } 
   
     count++;
-    //cout<<temp<<endl;
   }
   return false;
 
